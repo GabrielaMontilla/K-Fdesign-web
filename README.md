@@ -22,7 +22,7 @@ Una aplicación web moderna, profesional y completa para una empresa de remodela
 - Sistema de mensajería (preparado para integración backend)
 
 ### Panel Administrativo
-- Acceso exclusivo para `estimating@k-fdesign.com`
+- Acceso exclusivo para administrador
 - Dashboard con métricas importantes
 - Gestión de proyectos
 - Lista de clientes
@@ -133,15 +133,7 @@ Una aplicación web moderna, profesional y completa para una empresa de remodela
 - Los datos se almacenan en localStorage
 - No se valida contraseña en la demo
 
-### Usuarios Demo
-```
-Admin:
-Email: estimating@k-fdesign.com
-Contraseña: cualquiera
 
-Cliente:
-Email: cualquier email
-Contraseña: cualquiera
 ```
 
 ## 💾 Datos
