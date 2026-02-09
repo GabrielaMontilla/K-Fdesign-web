@@ -1,155 +1,110 @@
-import { Link, useNavigate } from 'react-router';
-import { Button } from './ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { useAuth } from '../lib/authContext';
-import { User, Menu, LogOut, LayoutDashboard } from 'lucide-react';
-import { useState } from 'react';
+import { Link } from 'react-router';
+import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react';
 
-export function Header() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  const navLinks = [
-    { name: 'Inicio', path: '/' },
-    { name: 'Proyectos', path: '/projects' },
-    { name: 'Contacto', path: '/#contact' },
-  ];
-
+export function Footer() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">K&F</span>
+    <footer className="bg-foreground text-white">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Logo and Description */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 bg-white rounded-lg p-1">
+                <img
+                  src="/public/logo.png"
+                  alt="Logo K&F Design"
+                  className="h-6 w-6"
+                  style={{ width: '80px', height: '70px' }}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <span className="font-semibold text-lg leading-none">K&F Design</span>
+                <span className="text-xs text-gray-400">Remodelaciones</span>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className="font-semibold text-lg leading-none">K&F Design</span>
-              <span className="text-xs text-muted-foreground">Remodelaciones</span>
+            <p className="text-sm text-gray-400">
+              Transformamos espacios en experiencias únicas. Calidad y prestigio en cada proyecto.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-semibold mb-4">Enlaces Rápidos</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Inicio
+                </Link>
+              </li>
+              <li>
+                <Link to="/projects" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Proyectos
+                </Link>
+              </li>
+              <li>
+                <Link to="/#contact" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Contacto
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="font-semibold mb-4">Servicios</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li>Remodelación Residencial</li>
+              <li>Remodelación Comercial</li>
+              <li>Diseño de Interiores</li>
+              <li>Consultoría de Proyectos</li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-semibold mb-4">Contacto</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-2 text-sm text-gray-400">
+                <MapPin className="h-4 w-4 mt-1 flex-shrink-0" />
+                <span>Estamos en el area de Dallas-Fort Worth, Texas</span>
+              </li>
+              <li className="flex items-center gap-2 text-sm text-gray-400">
+                <Phone className="h-4 w-4 flex-shrink-0" />
+                <span>+1 (972) 741-1883</span>
+              </li>
+              <li className="flex items-center gap-2 text-sm text-gray-400">
+                <Mail className="h-4 w-4 flex-shrink-0" />
+                <a href="mailto:estimating@k-fdesign.com" className="hover:text-primary transition-colors">
+                  estimating@k-fdesign.com
+                </a>
+              </li>
+            </ul>
+            <div className="flex items-center gap-3 mt-4">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
             </div>
           </div>
-        </Link>
+        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
-
-        {/* User Menu / Auth Buttons */}
-        <div className="flex items-center gap-4">
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <User className="h-4 w-4" />
-                  <span className="hidden md:inline">{user.name}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => navigate('/profile')}>
-                  <User className="mr-2 h-4 w-4" />
-                  Perfil
-                </DropdownMenuItem>
-                {user.role === 'admin' && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate('/admin')}>
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
-                      Panel Admin
-                    </DropdownMenuItem>
-                  </>
-                )}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Cerrar Sesión
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div className="hidden md:flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
-                Iniciar Sesión
-              </Button>
-              <Button size="sm" onClick={() => navigate('/register')}>
-                Registrarse
-              </Button>
-            </div>
-          )}
-
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+        <div className="border-t border-white/10 mt-8 pt-8 text-center text-sm text-gray-400">
+          <p>&copy; 2026 K&F Design. Todos los derechos reservados.</p>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-white">
-          <nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="py-2 text-sm font-medium hover:text-primary transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            {!user && (
-              <div className="flex flex-col gap-2 pt-2 border-t">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    navigate('/login');
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Iniciar Sesión
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    navigate('/register');
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Registrarse
-                </Button>
-              </div>
-            )}
-          </nav>
-        </div>
-      )}
-    </header>
+    </footer>
   );
 }
